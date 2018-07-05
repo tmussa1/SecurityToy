@@ -6,6 +6,7 @@ import me.afua.securitydemoagain.repository.AppUserRepository;
 import me.afua.securitydemoagain.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.PostConstruct;
 
@@ -18,17 +19,35 @@ public class MainController {
     @Autowired
     AppUserRepository users;
 
+    @RequestMapping("/")
+    public String showHomepage(){
+        return "dashboard";
+    }
+    @RequestMapping("/teacher")
+    public String showCourselist(){
+        return "dashboard";
+    }
+
+    @RequestMapping("/student")
+    public String showDashboard(){
+        return "dashboard";
+    }
+
     @PostConstruct
     public void loadData()
     {
-        UserRole ordinaryUser = new UserRole("USER");
-        roles.save(ordinaryUser);
+        UserRole teacher = new UserRole("TEACHER");
+        roles.save(teacher);
 
-        UserRole admin = new UserRole("ADMIN");
-        roles.save(admin);
+        UserRole student = new UserRole("STUDENT");
+        roles.save(student);
 
-        AppUser newUser = new AppUser("auser","apassword");
-        newUser.addRole(ordinaryUser);
+        AppUser oldUser = new AppUser("ateacher","apassword");
+        oldUser.addRole(teacher);
+        users.save(oldUser);
+
+        AppUser newUser = new AppUser("astudent","apass");
+        newUser.addRole(student);
         users.save(newUser);
 
     }

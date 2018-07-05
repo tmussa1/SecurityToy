@@ -25,7 +25,7 @@ public class AppUser {
 
     public AppUser(String username, String password) {
         this.username = username;
-        this.password = password;
+        setPassword(password);
         roles = new HashSet<>();
     }
 
